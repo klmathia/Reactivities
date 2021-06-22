@@ -59,7 +59,7 @@ export default observer (function ActivityDetailedHeader({activity}: Props) {
                             floated='left'
                             basic
                             content={activity.isCancelled ? 'Re-activate Activity' : 'Cancel Activity'}
-                            onClic={cancelActivityToggle}
+                            onClick={cancelActivityToggle}
                             loading={loading}
                         />
                         <Button as={Link} 

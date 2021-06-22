@@ -76,7 +76,7 @@ export default class ActivityStore{
             activity.isGoing = activity.attendees!.some(
                 a => a.username === user.username
             )
-            activity.isHost = activity.hostUsername === user.username;
+            activity.isHost = user.username === activity.hostUsername;
             activity.host = activity.attendees?.find(x => x.username === activity.hostUsername);
         }
         activity.date = new Date(activity.date!);
@@ -100,8 +100,10 @@ export default class ActivityStore{
             runInAction(() => {
                 this.selectedActivity = newActivity;
             })
+            this.loading = false;
         } catch (error) {
             console.log(error);
+            this.loading = false;
         }
     }
 
@@ -114,10 +116,12 @@ export default class ActivityStore{
                         let updatedActivity = {...this.getActivity(activity.id), ...activity}
                         this.activityRegistry.set(activity.id, updatedActivity as Activity);
                         this.selectedActivity = updatedActivity as Activity;
+                        this.loading = false;
                     }
                 })
             } catch (error) {
                 console.log(error);
+                this.loading = false;
             }
     }
 
